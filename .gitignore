@@ -1,0 +1,56 @@
+# Node.js (Frontend - SvelteKit)
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+
+# Build output for SvelteKit
+.build/
+public/build/
+
+# Python (Backend - Flask)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.env
+*.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# System files
+*.bak
+*.tmp
+
+# Temporary files
+*.tmp
+*.temp
+
+# Package distribution
+*.tar.gz
+*.zip
+
+# Test results
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.nib
+*.nib/

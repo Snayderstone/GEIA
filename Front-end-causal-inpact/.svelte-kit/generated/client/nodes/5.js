@@ -1,0 +1,1 @@
+export { default as component } from "../../../../src/routes/causal-impact/+page.svelte";
