@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: backend
+    image: snayderstone/back-end-causalinpact:latest
+    envVars:
+      - key: GROQ_API_KEY
+        value: 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
+      - key: OPENAI_API_KEY
+        value: sk-proj-oZU6XVaMWaxu6cUt1AlxT3BlbkFJy5Zv13jmAq3OjIvNkCcT
+    ports:
+      - port: 5000
+    plan: free
+    buildCommand: ""
+    startCommand: "flask run --host=0.0.0.0"
+    
+  - type: web
+    name: frontend
+    image: snayderstone/front-end-causalinpact:latest
+    ports:
+      - port: 4173
+    plan: free
+    buildCommand: ""
+    startCommand: "npm run preview"
