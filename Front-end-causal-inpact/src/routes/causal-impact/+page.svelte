@@ -8,6 +8,7 @@
 	import { marked } from 'marked'; // Importa la biblioteca marked
 
 	import { onDestroy } from 'svelte';
+	console.log('API URL:', import.meta.env.VITE_FLASK_APP_BACKEND_CAUSALINPACT);
 
 	Chart.register(...registerables, annotationPlugin);
 	let barChart; // Declare a variable to store the bar chart instance
@@ -261,7 +262,7 @@
 			try {
 				isLoading.set(true); // Mostrar el spinner
 
-				const response = await fetch('http://localhost:5000/api/impact', {
+				const response = await fetch('${import.meta.env.VITE_FLASK_APP_BACKEND_CAUSALINPACT}/api/impact', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
