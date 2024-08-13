@@ -10,14 +10,10 @@ services:
     ports:
       - port: 5000
     plan: free
-    buildCommand: ""
-    startCommand: "flask run --host=0.0.0.0"
-    
+
   - type: web
     name: frontend
     image: snayderstone/front-end-causalinpact:latest
     ports:
       - port: 4173
     plan: free
-    buildCommand: ""
-    startCommand: "npm run preview"
