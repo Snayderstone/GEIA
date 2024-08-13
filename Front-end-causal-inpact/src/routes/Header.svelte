@@ -1,14 +1,13 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
-	import logo2 from '$lib/images/logo_uce.png';
+	import logo from '$lib/images/geia-logo.png';
 	import github from '$lib/images/github.svg';
 </script>
 
 <header>
 	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
+		<a href="https://github.com/Snayderstone/GEIA">
+			<img src={logo} alt="Geia-logo" />
 		</a>
 	</div>
 
@@ -21,15 +20,16 @@
 				<a href="/">Home</a>
 			</li>
 
+			<li aria-current={$page.url.pathname.startsWith('/how-to-use') ? 'page' : undefined}>
+				<a href="/how-to-use">How to use</a>
+			</li>
+
 			<li aria-current={$page.url.pathname.startsWith('/causal-impact') ? 'page' : undefined}>
 				<a href="/causal-impact">Causal impact</a>
 			</li>
 
 			<li aria-current={$page.url.pathname.startsWith('/historial') ? 'page' : undefined}>
-				<a href="/historial">Historial</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/how-to-use') ? 'page' : undefined}>
-				<a href="/how-to-use">How to use</a>
+				<a href="/historial">Record</a>
 			</li>
 
 			<li aria-current={$page.url.pathname === '/about-project' ? 'page' : undefined}>
@@ -38,10 +38,6 @@
 
 			<li aria-current={$page.url.pathname.startsWith('/about-us') ? 'page' : undefined}>
 				<a href="/about-us">About us</a>
-			</li>
-
-			<li aria-current={$page.url.pathname.startsWith('/sverdle') ? 'page' : undefined}>
-				<a href="/sverdle">Sverdle</a>
 			</li>
 			
 		</ul>

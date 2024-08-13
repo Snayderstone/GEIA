@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import Chart from 'chart.js/auto'; // Importa Chart.js
+  import { marked } from 'marked'; // Importa la biblioteca marked
 
   let history = [];
   let columns = [
@@ -21,6 +22,14 @@
   function extractValue(value) {
     const match = value.match(/^(\d+(\.\d+)?)/);
     return match ? parseFloat(match[0]) : 0;
+  }
+
+   // Función para convertir Markdown a texto
+   function markdownToText(markdown) {
+    const html = marked.parse(markdown);
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
   }
 
   function clearHistory() {
@@ -167,8 +176,8 @@
           {#if selectedColumn === 'interventionDate'}<td>{record.payload.interventionDate}</td>{/if}
           {#if selectedColumn === 'eventType'}<td>{record.payload.eventType}</td>{/if}
           {#if selectedColumn === 'originalColumn'}<td>{record.payload.originalColumn}</td>{/if}
-          {#if selectedColumn === 'explanationGroq'}<td>{record.result['Explicación llama 3-8b-8192']}</td>{/if}
-          {#if selectedColumn === 'explanationOpenAI'}<td>{record.result['Explicación gpt-3.5-turbo']}</td>{/if}
+          {#if selectedColumn === 'explanationGroq'}<td>{markdownToText(record.result['Explicación llama 3-8b-8192'])}</td>{/if}
+          {#if selectedColumn === 'explanationOpenAI'}<td>{markdownToText(record.result['Explicación gpt-3.5-turbo'])}</td>{/if}
           {#if selectedColumn === 'currentAverage'}<td>{record.result['Promedio Actual']}</td>{/if}
           {#if selectedColumn === 'predictedAverage'}<td>{record.result['Predicción Promedio']}</td>{/if}
           {#if selectedColumn === 'absoluteEffect'}<td>{record.result['Efecto Absoluto Promedio']}</td>{/if}

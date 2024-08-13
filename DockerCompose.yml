@@ -1,1 +1,25 @@
 version: '3.8'
+
+services:
+  backend:
+    image: snayderstone/back-end-causalinpact:latest
+    container_name: container_backend_causalinpact
+    environment:
+      - GROQ_API_KEY=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
+      - OPENAI_API_KEY=sk-proj-oZU6XVaMWaxu6cUt1AlxT3BlbkFJy5Zv13jmAq3OjIvNkCcT
+    ports:
+      - "5000:5000"
+    networks:
+      - causalinpact_net
+
+  frontend:
+    image: snayderstone/front-end-causalinpact:latest
+    container_name: container_frontend_causalinpact
+    ports:
+      - "4173:4173"
+    networks:
+      - causalinpact_net
+
+networks:
+  causalinpact_net:
+    driver: bridge

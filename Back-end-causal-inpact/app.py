@@ -1,18 +1,16 @@
-from flask import Flask, request, jsonify
-from causalimpact import CausalImpact
-from plot_utils import plot2
-from flask_cors import CORS
-from io import BytesIO
-import pandas as pd
-from groq import Groq
 import base64
-import warnings
 import re
+import warnings
+from io import BytesIO
+
+import pandas as pd
+from causalimpact import CausalImpact
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 import groq_utils
 import openai_utils
-
-
-
+from plot_utils import plot2
 
 # Suprimir todas las advertencias
 warnings.filterwarnings('ignore')
@@ -145,30 +143,39 @@ def analyze_impact():
 
         # Preparar el prompt para OpenAI
         prompt_openai = f"""
-        En un análisis de series de tiempo interrumpidas utilizando el modelo Causal Impact de Google se obtuvo la siguiente información:
-        Tipo de intervención: "{event_type}" en el sector "{original_column_name}", 
-        Fecha de intervención “{intervention_date}”, definidos en el pre-periodo de “{pre_period}” y el post-periodo “{post_period}”
-        En español, explica el siguiente reporte sobre el efecto en no más de un párrafo, de forma sencilla, 
-        clara y precisa para usuarios que no saben nada técnico.Luego, si el valor promedio actual es mayor al 
-        valor promedio predicho escribe en una lista de 3 párrafos con 3 estrategias para potenciar 
-        el éxito del impacto y por lo contrario si el valor promedio actual con publicidad 
-        es menor al valor promedio predicho escribe en una lista de tres párrafos 
-        con 3 estrategias de replanteo sobre el fracaso de la intervención.
-        Reporte dado en dólares:{report}
+        En un análisis de series de tiempo interrumpidas sobre la medición del efecto causal se obtiene la siguiente información:
+        Tipo de intervención: {event_type},
+        Tipo de datos: {original_column_name},
+        Fecha de intervención: {intervention_date},
+        definidos en el pre-periodo: {pre_period},
+        y el post-periodo: {post_period}.
+        En formato markdown y en español devuélveme una explicación del siguiente reporte el cual debe tener como 
+        título: “Informe sobre el impacto de la intervención” seguido de un párrafo de nomas de 10 líneas, 
+        en forma sencilla, clara y precisa para usuarios que no saben nada.
+        Luego, si el valor promedio actual es mayor que el valor promedio predicho escribe el 
+        título “Estrategias para potenciar el éxito del impacto” seguido de una lista ordenada con 3 subtítulos con un párrafo cada uno que no supere más de 5 líneas sobre 
+        las estrategias para potenciar el éxito del impacto.
+        Por lo contrario, si el valor promedio actual es menor que el valorpromedio predicho escribe el título “Estrategias de acción del fracaso del impacto” 
+        seguido de una lista ordenada con 5 subtítulos con un párrafo cada uno que no supere más de 10 líneas de texto, 
+        escribiendo sobre estrategias de acción para no volver a caer en el impacto negativo de forma específica y clara.
+        Reporte dado en dólares: {report}
         """
 
         # Preparar el prompt para Groq
         prompt_groq = f"""
-        En un análisis de series de tiempo interrumpidas utilizando el modelo Causal Impact de Google se obtuvo la siguiente información: 
-        Tipo de intervención: "{event_type}" en el sector "{original_column_name}", 
-        Fecha de intervención “{intervention_date}”, definidos en el pre-periodo de 
-        “{pre_period}” y el post-periodo “{post_period}”. 
-        En español, explica el siguiente reporte sobre el efecto en no más de un párrafo, de forma sencilla, clara y precisa para usuarios que no saben nada técnico, 
-        sin incluir mas palabras que no sea solo el párrafo. Luego del análisis del reporte dame una única respuesta dependiendo del caso, 
-        sin incluir más palabras. solamente el título de la estrategia y sus 3 párrafos de estrategias. 
-        CASO 1: Si la variable respuesta es mayor al valor predicho escribe en una lista de 3 párrafos con 3 estrategias para potenciar el éxito del impacto. 
-        CASO 2: Si la variable de respuesta es menor al valor predicho escribe en una lista de tres párrafos con 3 estrategias de replanteo sobre el fracaso 
-        de la intervención. Reporte dado en dólares:{report}
+        En un análisis de series de tiempo interrumpidas sobre la medición del efecto causal se obtiene la siguiente información: 
+        Tipo de intervención: {event_type}, 
+        Tipo de datos: {original_column_name}, 
+        Fecha de intervención: {intervention_date},
+        definidos en el pre-periodo: {pre_period},
+        y el post-periodo: {post_period}.
+        En formato markdown y en español devuélveme una explicación del siguiente reporte el cual debe tener como 
+        título: “Informe sobre el impacto de la intervención” seguido de un párrafo de nomas de 5 líneas, 
+        en forma sencilla, clara y precisa para usuarios que no saben nada, sin incluir más palabras. 
+        Luego en un título: “Explicación” seguido de un párrafo de nomas de 5 líneas, en forma sencilla, 
+        clara y precisa para usuarios que no saben nada explica las posibles causas de esos resultados, 
+        sin incluir más palabras.
+        Reporte dado en dólares: {report}
         """
 
         # Obtener las explicaciones de OpenAI y Groq

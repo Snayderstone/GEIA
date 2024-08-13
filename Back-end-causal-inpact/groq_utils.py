@@ -1,8 +1,11 @@
-from groq import Groq
+import os
 import time
 
+from groq import Groq
+
 # Configura tu clave de API de Groq
-groq_client = Groq(api_key="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")
+api_key = os.getenv('GROQ_API_KEY')
+groq_client = Groq(api_key=api_key)
 
 def get_groq_completion(prompt):
     print("Prompt Groq:", prompt)

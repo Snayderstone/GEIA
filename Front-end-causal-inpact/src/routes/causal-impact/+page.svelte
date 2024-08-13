@@ -5,6 +5,7 @@
 	import 'chartjs-adapter-date-fns';
 	import annotationPlugin from 'chartjs-plugin-annotation';
 	import DataTable from './DataTable.svelte';
+	import { marked } from 'marked'; // Importa la biblioteca marked
 
 	import { onDestroy } from 'svelte';
 
@@ -225,6 +226,8 @@
 		}
 	}
 
+
+
 	// ... Función para enviar datos al backend: ...------------------------------------------------------
 	let loadingExplanationGroq = writable(''); // Para la explicación en carga
 	let loadingExplanationOpenAI = writable(''); // Para la explicación de OpenAI en carga
@@ -258,7 +261,7 @@
 			try {
 				isLoading.set(true); // Mostrar el spinner
 
-				const response = await fetch('http://127.0.0.1:5000/api/impact', {
+				const response = await fetch('http://localhost:5000/api/impact', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
@@ -281,7 +284,6 @@
 						interventionDate: payload.interventionDate,
 						eventType: payload.eventType,
 						originalColumn: payload.originalColumn.name
-
 					},
 					result: {
 						'Promedio Actual': result.summary['Promedio Actual'],
@@ -330,6 +332,10 @@
 					drawPieChart(result.summary);
 					createTable(result.summary);
 				}
+
+				// Convertir el texto de Markdown a HTML
+				loadingExplanationGroq.set(marked(explanationGroq));
+				loadingExplanationOpenAI.set(marked(explanationOpenAI));
 			} catch (error) {
 				console.error('Error al enviar datos al backend:', error);
 				alert('Hubo un error al enviar los datos al backend.');
@@ -495,6 +501,16 @@
 
 	// Obtener la imagen base64 del resultado de la API
 	$: imageUrl = $apiResults?.image ? `data:image/png;base64,${$apiResults.image}` : '';
+	// Función para manejar el clic del botón
+function handleGenerateModel() {
+    if (isValid()) {
+        console.log('Inputs validated successfully. Calling sendDataToBackend...');
+        sendDataToBackend();
+    } else {
+        alert('Por favor, valide los datos antes de enviarlos.');
+    }
+}
+
 </script>
 
 <svelte:head>
@@ -634,6 +650,8 @@
 	{#if $apiResults}
 		<h1 class="text-2xl font-bold mb-4">Results</h1>
 
+		
+
 		<div class="mt-6">
 			<!-- Card de la descripción del evento -->
 			<div
@@ -697,10 +715,11 @@
 				<div class="mt-5 space-y-1.5 px-5 pb-10">
 					<!-- Chat de llama 3 -->
 					<div>
-						<p class=" text-white">{$loadingExplanationGroq}</p>
+						<p class=" text-white">{@html $loadingExplanationGroq}</p>
 					</div>
 				</div>
 			</div>
+
 			<br />
 			<br />
 			<!-- Card de la explicación del evento con OpenAI -->
@@ -736,7 +755,7 @@
 				<div class="mt-5 space-y-1.5 px-5 pb-10">
 					<!-- Chat de OpenAI -->
 					<div>
-						<p class=" text-white">{$loadingExplanationOpenAI}</p>
+						<p class=" text-white">{@html $loadingExplanationOpenAI}</p>
 					</div>
 				</div>
 			</div>

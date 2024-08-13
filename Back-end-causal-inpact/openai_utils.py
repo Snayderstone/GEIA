@@ -1,8 +1,10 @@
-import openai
+import os
 import time
 
+import openai
+
 # Configura tu clave de API de OpenAI
-#openai.api_key = 'sk-proj-oZU6XVaMWaxu6cUt1AlxT3BlbkFJy5Zv13jmAq3OjIvNkCcT'
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 def get_openai_completion(prompt):
     print("Prompt OpenAI:", prompt)

@@ -1,0 +1,23 @@
+# Usar una imagen base con Node.js
+FROM node:20.11.1
+
+# Establecer el directorio de trabajo en el contenedor
+WORKDIR /app
+
+# Copiar el archivo package.json y package-lock.json (o yarn.lock) al contenedor
+COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Copiar el resto de los archivos de la aplicación al contenedor
+COPY . .
+
+# Construir la aplicación SvelteKit
+RUN npm run build
+
+# Exponer el puerto en el que la aplicación escuchará
+EXPOSE 4173
+
+# Comando para ejecutar la aplicación
+CMD ["npm", "run", "preview"]
