@@ -1,4 +1,14 @@
-# Proyecto GEIA
+# Proyecto Generative AI-Powered Economic Impact Analysis System"
+
+GEIA es una plataforma web para analizar el impacto de eventos significativos en series de tiempo. Ideal para:
+
+- **Investigación de Mercados:** Evaluar el efecto de campañas de marketing en las ventas.
+- **Ciencias Políticas:** Analizar cómo los cambios legislativos afectan el comportamiento de la población.
+- **Economía:** Estudiar el impacto de nuevos controles crediticios en el endeudamiento.
+- **Eventos Económicos:** Investigar cómo eventos como crisis o elecciones influyen en indicadores económicos.
+- **Medicina:** Medir la eficacia de tratamientos comparando datos de salud antes y después del tratamiento.
+
+GEIA permite a los usuarios comparar datos antes y después de eventos clave para obtener insights valiosos y tomar decisiones basadas en datos.
 
 Este proyecto consiste en un frontend desarrollado con SvelteKit y un backend en Flask. Ambos componentes están dockerizados y pueden ser desplegados juntos usando Docker Compose.
 
