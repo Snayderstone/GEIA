@@ -22,7 +22,7 @@ import logouce from '$lib/images/uce-logo.png';
 	<section class="content">
 		<h2>Universidad Central del Ecuador</h2>
 		<p>
-			Fundada en 1826, la <strong>Universidad Central del Ecuador (UCE)</strong> es la universidad pública más antigua y una de las más prestigiosas del país. Ubicada en Quito, la capital de Ecuador, la UCE ha jugado un papel fundamental en la formación de líderes en diversas áreas del conocimiento.
+			Fundada en 1620, la <strong>Universidad Central del Ecuador (UCE)</strong> es la universidad pública más antigua y una de las más prestigiosas del país. Ubicada en Quito, la capital de Ecuador, la UCE ha jugado un papel fundamental en la formación de líderes en diversas áreas del conocimiento.
 		</p>
 
 		<h2>Facultad de Ingeniería y Ciencias Aplicadas (FICA)</h2>

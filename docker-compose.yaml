@@ -5,9 +5,8 @@ services:
     image: snayderstone/back-end-causalinpact:latest
     container_name: container_backend_causalinpact
     environment:
-      - GROQ_API_KEY=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
-      - OPENAI_API_KEY=sk-proj-oZU6XVaMWaxu6cUt1AlxT3BlbkFJy5Zv13jmAq3OjIvNkCcT
-    ports:
+      - GROQ_API_KEY=your-groq-api-key-here(llama 3-8b-8192)
+      - OPENAI_API_KEY=your-openai-api-key-here-(gpt-3.5-turbo)
       - "5000:5000"
     networks:
       - causalinpact_net
